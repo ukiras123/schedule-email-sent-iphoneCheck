@@ -4,9 +4,25 @@ const { sendEmail } = require("./sendEmail");
 // const cronExpression = "*/5 * * * * *"; // Run every 5 seconds
 const cronExpression = "*/5 * * * *"; // Run every 5 minutes
 
+let config = (msg = "Hello") => {
+  return {
+    method: "post",
+    url: `https://api.pushover.net/1/messages.json?token=ao9axyomrbd52ubdtxogndpg5rfb74&user=uxjq1hmrnszj9ey8tiv27ydrm92dpa&message=${msg}`,
+  };
+};
+
 exports.initScheduledJobs = () => {
   console.log("Initializing Run");
   sendEmail("StartUp Schedule Running", "iPhone Check is running...");
+  axios
+    .request(config("Initial Setup"))
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   const scheduledJobFunction = CronJob.schedule(cronExpression, () => {
     axios
       .get(
@@ -21,6 +37,14 @@ exports.initScheduledJobs = () => {
           if (isIphoneAvailable) {
             console.log("iPhone is now available. Sending Email...");
             sendEmail();
+            axios
+              .request(config("iPhone is Available"))
+              .then((response) => {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
         } catch (e) {
           console.log(e);
