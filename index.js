@@ -8,6 +8,9 @@ app.set("port", process.env.PORT || 3000);
 // ADD CALL to execute your function(s)
 scheduledFunctions.initScheduledJobs();
 
+app.get("/status", (req, res) => {
+  res.send({ status: "healthy" });
+});
 app.listen(app.get("port"), () => {
   console.log("Express server listening on port " + app.get("port"));
 });
