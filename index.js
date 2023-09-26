@@ -9,6 +9,7 @@ app.set("port", process.env.PORT || 3000);
 scheduledFunctions.initScheduledJobs();
 
 app.get("/status", (req, res) => {
+  console.log("Status Check...");
   res.send({ status: "healthy" });
 });
 app.listen(app.get("port"), () => {
