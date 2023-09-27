@@ -11,6 +11,7 @@ let config = (msg = "Hello") => {
   };
 };
 
+let apiResponse;
 exports.initScheduledJobs = () => {
   console.log("Initializing Run");
   sendEmail("StartUp Schedule Running", "iPhone Check is running...");
@@ -30,6 +31,7 @@ exports.initScheduledJobs = () => {
       )
       .then(({ data }) => {
         try {
+          apiResponse = data;
           const iphoneInCanberra = data?.stores?.R483;
           const iphone15InCanberra = iphoneInCanberra["MU793ZP/A"];
           const isIphoneAvailable = iphone15InCanberra?.availability?.unlocked;
@@ -48,6 +50,7 @@ exports.initScheduledJobs = () => {
           }
         } catch (e) {
           console.log(e);
+          console.log("Response was ->", apiResponse);
         }
       })
       .error((e) => console.log(e));
