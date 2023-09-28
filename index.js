@@ -12,6 +12,11 @@ app.get("/status", (req, res) => {
   console.log("Status Check...");
   res.send({ status: "healthy" });
 });
+
+app.get("/health", (req, res) => {
+  res.send({ status: "healthy" });
+});
+
 app.listen(app.get("port"), () => {
   console.log("Express server listening on port " + app.get("port"));
 });
