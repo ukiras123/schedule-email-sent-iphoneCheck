@@ -49,9 +49,14 @@ exports.initScheduledJobs = () => {
             const root = HTMLParser.parse(data);
             let locationArr = [];
             let jobTitleArr = [];
+            let jobLinkArr = [];
             const location = root.querySelectorAll(".nido-location-icon");
             const jobPost = root.querySelectorAll(".nido-job-title");
+            const jobLink = root.querySelectorAll(".nido-job-link");
 
+            jobLink.forEach((l) => {
+              jobLinkArr.push(`https://nido.edu.au${l.getAttribute("href")}`);
+            });
             location.forEach((l) => {
               locationArr.push(l.innerText.trim());
             });
@@ -64,7 +69,9 @@ exports.initScheduledJobs = () => {
               "Nido Job Available",
               `Nido job is currently available, please apply online. \n\nLocation:\n${locationArr.join(
                 ","
-              )} \n\nPosition:\n${jobTitleArr.join(",")}\n\nThank You`,
+              )} \n\nPosition:\n${jobTitleArr.join(",")}
+              \n\nApplyHere:\n${jobLinkArr.join("\n")}
+              \n\nThank You`,
               "ukiras@gmail.com,aojaswi@gmail.com"
             );
             axios
