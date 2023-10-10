@@ -64,7 +64,7 @@ exports.initScheduledJobs = () => {
               "Nido Job Available",
               `Nido job is currently available, please apply online. \n\nLocation:\n${locationArr.join(
                 ","
-              )} \n\nPosition:\n${jobTitleArr.join(",")}\n\nThankYou`,
+              )} \n\nPosition:\n${jobTitleArr.join(",")}\n\nThank You`,
               "ukiras@gmail.com,aojaswi@gmail.com"
             );
             axios
