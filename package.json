@@ -17,6 +17,7 @@
     "node-cron": "^3.0.2",
     "nodemailer": "6.9.5",
     "nodemon": "3.0.1",
-    "dotenv": "16.3.1"
+    "dotenv": "16.3.1",
+    "node-html-parser": "^6.1.10"
   }
 }

@@ -1,8 +1,10 @@
 const CronJob = require("node-cron");
+const HTMLParser = require("node-html-parser");
+
 const axios = require("axios");
 const { sendEmail } = require("./sendEmail");
-const cronExpression = "*/5 * * * * *"; // Run every 5 seconds
-// const cronExpression = "*/5 * * * *"; // Run every 5 minutes
+// const cronExpression = "*/5 * * * * *"; // Run every 5 seconds
+const cronExpression = "*/5 * * * *"; // Run every 5 minutes
 
 let nidoSearchConfig = {
   method: "post",
@@ -11,6 +13,7 @@ let nidoSearchConfig = {
     "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
   },
   data: "category=&location=1661862&worktype=&gettitle=&sub_cat_id=",
+  // data: "category=&location=1687342&worktype=&gettitle=&sub_cat_id=",
 };
 let config = (msg = "Hello") => {
   return {
@@ -43,10 +46,25 @@ exports.initScheduledJobs = () => {
           );
           console.log("Job is Available", isJobAvailable);
           if (isJobAvailable) {
+            const root = HTMLParser.parse(data);
+            let locationArr = [];
+            let jobTitleArr = [];
+            const location = root.querySelectorAll(".nido-location-icon");
+            const jobPost = root.querySelectorAll(".nido-job-title");
+
+            location.forEach((l) => {
+              locationArr.push(l.innerText.trim());
+            });
+            jobPost.forEach((l) => {
+              jobTitleArr.push(l.innerText.trim());
+            });
+
             console.log("Job is available in Nido. Sending Email...");
             sendEmail(
               "Nido Job Available",
-              "Nido job is currently available, please apply online",
+              `Nido job is currently available, please apply online. \n\nLocation:\n${locationArr.join(
+                ","
+              )} \n\nPosition:\n${jobTitleArr.join(",")}\n\nThankYou`,
               "ukiras@gmail.com,aojaswi@gmail.com"
             );
             axios
@@ -60,6 +78,11 @@ exports.initScheduledJobs = () => {
           }
         } catch (e) {
           console.log(e);
+          sendEmail(
+            "Nido Job Search Failure",
+            `Nido Job Search is Failing ${JSON.stringify(e)}`,
+            "ukiras@gmail.com"
+          );
           console.log("Nido Search Response was ->", apiResponse);
         }
       })
