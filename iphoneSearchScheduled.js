@@ -13,7 +13,7 @@ let config = (msg = "Hello") => {
 
 let apiResponse;
 exports.initScheduledJobs = () => {
-  console.log("Initializing Run");
+  console.log("Initializing iPhone Availability Run");
   sendEmail("StartUp Schedule Running", "iPhone Check is running...");
   axios
     .request(config("Initial Setup"))
@@ -50,7 +50,7 @@ exports.initScheduledJobs = () => {
           }
         } catch (e) {
           console.log(e);
-          console.log("Response was ->", apiResponse);
+          console.log("iPhone Availability Response was ->", apiResponse);
         }
       })
       .error((e) => console.log(e));

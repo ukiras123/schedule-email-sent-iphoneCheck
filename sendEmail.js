@@ -14,10 +14,10 @@ const transporter = nodemailer.createTransport({
 });
 
 // Email content
-const sendEmail = (subject, text) => {
+const sendEmail = (subject, text, to = "ukiras@gmail.com") => {
   const mailOptions = {
-    from: "iphone@kirangautam.com", // Sender's email address
-    to: "ukiras@gmail.com", // Recipient's email address
+    from: "KiranOnlineCheck <onlineCheck@kirangautam.com>", // Sender's email address
+    to, // Recipient's email address
     subject: subject || "iPhone Availability",
     text: text || "iPhone is available",
   };
