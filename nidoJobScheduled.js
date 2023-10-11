@@ -42,10 +42,8 @@ exports.initScheduledJobs = () => {
         try {
           apiResponse = data;
           console.log("Data", data);
-          const isJobAvailable = !data.includes(
-            "There is currently nothing available"
-          );
-          console.log("Job is Available", isJobAvailable);
+          const isJobAvailable = data.includes("nido-job-title");
+          console.log("Is Job Available", isJobAvailable);
           if (isJobAvailable) {
             const root = HTMLParser.parse(data);
             let locationArr = [];
@@ -66,15 +64,15 @@ exports.initScheduledJobs = () => {
             });
 
             console.log("Job is available in Nido. Sending Email...");
-            sendEmail(
-              "Nido Job Available",
-              `Nido job is currently available, please apply online. \n\nLocation:\n${locationArr.join(
-                ","
-              )} \n\nPosition:\n${jobTitleArr.join(",")}
-              \n\nApplyHere:\n${jobLinkArr.join("\n")}
-              \n\nThank You`,
-              "ukiras@gmail.com,aojaswi@gmail.com"
-            );
+            // sendEmail(
+            //   "Nido Job Available",
+            //   `Nido job is currently available, please apply online. \n\nLocation:\n${locationArr.join(
+            //     ","
+            //   )} \n\nPosition:\n${jobTitleArr.join(",")}
+            //   \n\nApplyHere:\n${jobLinkArr.join("\n")}
+            //   \n\nThank You`,
+            //   "ukiras@gmail.com,aojaswi@gmail.com"
+            // );
             axios
               .request(config("Nido Job Available"))
               .then((response) => {
