@@ -41,6 +41,7 @@ exports.initScheduledJobs = () => {
       .then(({ data }) => {
         try {
           apiResponse = data;
+          console.log("Data", data);
           const isJobAvailable = !data.includes(
             "There is currently nothing available"
           );
